@@ -16,11 +16,12 @@ html[data-wr-enabled] .wr-article .description { font-size: inherit !important; 
 html[data-wr-enabled] .wr-article p { font-size: inherit !important; line-height: inherit !important; margin: 0 0 .85em !important; text-align: start !important; overflow-wrap: break-word; hyphens: none !important; }
 html[data-wr-enabled] .wr-article > div.description { margin: 0 0 1.8em !important; }
 html[data-wr-enabled] .wr-article > div.description > span.description { display: block; }
-html[data-wr-enabled] .wr-article .wr-heading { scroll-margin-top: 24px; text-align: start !important; line-height: 1.35 !important; overflow-wrap: break-word; }
-html[data-wr-enabled] .wr-article [data-wr-level="1"] { font-size: 1.6em !important; font-weight: 700 !important; margin: 0 0 1.1em !important; }
-html[data-wr-enabled] .wr-article [data-wr-level="2"] { font-size: 1.22em !important; font-weight: 700 !important; margin: 1.4em 0 .6em !important; padding-top: .7em; border-top: 1px solid var(--wr-rule); }
-html[data-wr-enabled] .wr-article [data-wr-level="3"] { font-size: 1.12em !important; font-weight: 700 !important; margin: 1.25em 0 .6em !important; }
-html[data-wr-enabled] .wr-article [data-wr-level="4"], html[data-wr-enabled] .wr-article [data-wr-level="5"], html[data-wr-enabled] .wr-article [data-wr-level="6"] { font-size: 1em !important; font-weight: 700 !important; margin: 1.15em 0 .5em !important; }
+/* Use one body-text line as the spacing unit so heading gaps follow the user's leading. */
+html[data-wr-enabled] .wr-article .wr-heading { --wr-heading-gap: calc(var(--wr-font) * var(--wr-leading)); scroll-margin-top: 24px; text-align: start !important; line-height: var(--wr-leading) !important; overflow-wrap: break-word; }
+html[data-wr-enabled] .wr-article [data-wr-level="1"] { font-size: 1.6em !important; font-weight: 700 !important; margin: 0 0 var(--wr-heading-gap) !important; }
+html[data-wr-enabled] .wr-article [data-wr-level="2"] { font-size: 1.22em !important; font-weight: 700 !important; margin: var(--wr-heading-gap) 0 calc(var(--wr-heading-gap) / 2) !important; padding-top: calc(var(--wr-heading-gap) / 2); border-top: 1px solid var(--wr-rule); }
+html[data-wr-enabled] .wr-article [data-wr-level="3"] { font-size: 1.12em !important; font-weight: 700 !important; margin: var(--wr-heading-gap) 0 calc(var(--wr-heading-gap) / 2) !important; }
+html[data-wr-enabled] .wr-article [data-wr-level="4"], html[data-wr-enabled] .wr-article [data-wr-level="5"], html[data-wr-enabled] .wr-article [data-wr-level="6"] { font-size: 1em !important; font-weight: 700 !important; margin: var(--wr-heading-gap) 0 calc(var(--wr-heading-gap) / 2) !important; }
 html[data-wr-enabled] .wr-article a { text-underline-offset: .17em; text-decoration-thickness: 1px; text-decoration-line: underline; }
 html[data-wr-enabled] .wr-article ul, html[data-wr-enabled] .wr-article ol { padding-left: 1.6em; margin-bottom: 1em; }
 html[data-wr-enabled] .wr-article sup, html[data-wr-enabled] .wr-article sub { font-size: .75em; }

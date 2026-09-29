@@ -12,7 +12,7 @@ const body=article({title:'A clearer reading experience',media:false,sections:[
  ['5','Local preferences',para.repeat(3)]
 ]}).replace('<div class="contentDesign">','<div class="navbar row contentDesign">').replace('Original breadcrumb','Sample volume / Sample article').replace(/<span title="Add To My Favourite"><img src="\/assets\/favourite.png"><\/span>/,'').replace('Original author','Sample contributor');
 const banner='<div class="sample"><div><strong>Blue Books Reader · Unofficial</strong>Sample content for demonstration — not WHO/IARC book content.</div><nav><a href="/chaptercontent/72/19">Reading layout</a><a href="/settings">Settings</a><a href="/chapters/72">Chapters</a></nav></div>';
-const mock=`window.chrome={storage:{local:{get:(k,cb)=>cb({}),set:async()=>{}},onChanged:{addListener:()=>{}}}};`;
+const mock=`window.chrome={storage:{local:{get:(k,cb)=>{const leading=Number(new URLSearchParams(location.search).get("leading"));cb({readerPrefs:{leading:leading>=1.5&&leading<=1.9?leading:1.7}});},set:async()=>{}},onChanged:{addListener:()=>{}}}};`;
 const pages={'/chaptercontent/72/19':body,'/chapters/72':chapters().replace('<app-chapter>','<app-chapter><ul><li>Sample volume <span class="accordion-book-toggle"></span></li>').replace('</app-chapter>','</ul></app-chapter>')};
 http.createServer((req,res)=>{
  const route=new URL(req.url,'http://127.0.0.1:'+port).pathname;

@@ -57,7 +57,7 @@
   function stylePreferences() {
     const root = document.documentElement;
     root.setAttribute('data-wr-enabled', '');
-    root.setAttribute('data-wr-version', '0.2.0');
+    root.setAttribute('data-wr-version', '0.2.1');
     root.style.setProperty('--wr-font', `${prefs.font}px`);
     // Retain existing stored slider values, but use a font-independent CSS-pixel width.
     root.style.setProperty('--wr-width', `${prefs.width * 10}px`);

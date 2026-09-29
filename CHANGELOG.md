@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1 — 2026-09-29
+
+- Make heading line height and surrounding margins follow the selected line spacing.
+- Keep headings closer to their following text, with a larger gap above.
+- No changes to permissions, data handling, or source content.
+
 ## 0.2.0 — 2026-09-29
 
 - Prepare English-language public distribution.

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Blue Books Reader (Unofficial)",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Improve reading on WHO Blue Books with adjustable typography and clearer navigation. Unofficial; requires existing site access.",
   "homepage_url": "https://github.com/horn553/blue-books-reader",
   "icons": { "16": "icons/icon-16.png", "32": "icons/icon-32.png", "48": "icons/icon-48.png", "128": "icons/icon-128.png" },

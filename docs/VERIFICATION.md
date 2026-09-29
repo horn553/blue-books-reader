@@ -19,3 +19,7 @@ Changes since 0.1.4 are English popup text, branding/icons, links, documentation
 Reload the final installed package before submission and follow store/REVIEWER-NOTES.md. This is a separate publisher check. Not every volume, edition, viewport, or original-site feature has been tested.
 
 No subscription, saved note, feedback submission, or favourite was changed during evaluation. Original content and private captures are excluded from this repository.
+
+## 0.2.1 heading spacing
+
+Chrome synthetic-page checks at 18px text size and leading 1.5 / 1.9 confirmed heading top margins of 27 / 34.2px and bottom margins of 13.5 / 17.1px. Heading line height follows the selected leading. The article width stayed 816px and document horizontal overflow stayed zero. The default-leading store screenshot was refreshed. Automated source-preservation and packaging checks passed. Privacy handling and permissions are unchanged.
