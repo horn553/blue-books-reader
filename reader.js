@@ -57,7 +57,7 @@
   function stylePreferences() {
     const root = document.documentElement;
     root.setAttribute('data-wr-enabled', '');
-    root.setAttribute('data-wr-version', '0.2.1');
+    root.setAttribute('data-wr-version', '0.2.2');
     root.style.setProperty('--wr-font', `${prefs.font}px`);
     // Retain existing stored slider values, but use a font-independent CSS-pixel width.
     root.style.setProperty('--wr-width', `${prefs.width * 10}px`);
@@ -68,12 +68,20 @@
     mark(e, 'wr-heading'); patch(e, 'role', 'heading'); patch(e, 'aria-level', level);
     patch(e, 'data-wr-level', level);
   }
+  const headingSelector = 'h1,h2,h3,h4,h5,h6,[role="heading"]';
+  function sourceHeadingRank(e) {
+    if (/^H[1-6]$/.test(e.tagName)) return Number(e.tagName[1]);
+    // Read the source ARIA level, not the level assigned during a previous enhancement.
+    const saved = attributes.get(e)?.get('aria-level');
+    const level = Number(saved ? saved.before : e.getAttribute('aria-level'));
+    return Number.isInteger(level) && level > 0 ? level : 2;
+  }
   function tableKind(table) {
     const rows = [...table.rows];
     // Layout tables in the inspected TNM page have exactly one cell per outer row.
     // Never flatten a table or alter a cell/span/footnote, even in this case.
     const layout = rows.length > 0 && rows.every(r => r.cells.length === 1 && r.cells[0].colSpan === 1)
-      && [...table.querySelectorAll('h1')].some(h => h.closest('table') === table);
+      && [...table.querySelectorAll(headingSelector)].some(h => sourceHeadingRank(h) === 1 && h.closest('table') === table);
     return layout ? 'wr-layout-table' : 'wr-data-table';
   }
   function enhanceTables(root) {
@@ -101,7 +109,7 @@
     const sections = [...article.querySelectorAll(':scope > div.description')];
     const next = [];
     sections.forEach((section, index) => {
-      const heading = section.querySelector(':scope > p[id]');
+      const heading = section.querySelector(':scope > p[id], :scope > [role="heading"]');
       if (!heading) return;
       semanticHeading(heading, 2);
       const label = cleanText(heading);
@@ -114,10 +122,13 @@
       // The source has inline padding:0!important; ordinary stylesheet rules cannot override it.
       inline(link, 'padding', '8px 10px');
       next.push({ target: heading, button: link, parent: item, label, level: 2 });
-      const subheads = [...section.querySelectorAll('h1,h2,h3,h4,h5,h6')].filter(h => cleanText(h));
-      const ranks = [...new Set(subheads.map(h => Number(h.tagName[1])))].sort((a,b) => a-b);
+      const subheads = [...section.querySelectorAll(headingSelector)].filter(h => {
+        const outer = h.parentElement.closest(headingSelector);
+        return h !== heading && !heading.contains(h) && cleanText(h) && !(outer && section.contains(outer));
+      });
+      const ranks = [...new Set(subheads.map(sourceHeadingRank))].sort((a,b) => a-b);
       subheads.forEach(h => {
-        const level = Math.min(6, 3 + ranks.indexOf(Number(h.tagName[1])));
+        const level = Math.min(6, 3 + ranks.indexOf(sourceHeadingRank(h)));
         semanticHeading(h, level);
         next.push({ target: h, parent: item, label: cleanText(h), level });
       });

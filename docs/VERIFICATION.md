@@ -23,3 +23,7 @@ No subscription, saved note, feedback submission, or favourite was changed durin
 ## 0.2.1 heading spacing
 
 Chrome synthetic-page checks at 18px text size and leading 1.5 / 1.9 confirmed heading top margins of 27 / 34.2px and bottom margins of 13.5 / 17.1px. Heading line height follows the selected leading. The article width stayed 816px and document horizontal overflow stayed zero. The default-leading store screenshot was refreshed. Automated source-preservation and packaging checks passed. Privacy handling and permissions are unchanged.
+
+## 0.2.2 semantic headings and source CSS
+
+Read-only inspection of the open article in version 0.2.1 found zero bottom margin on paragraph-based section headings, while native h5 headings had 15.3px. A source Angular-scoped paragraph margin reset used !important and tied the extension selector's specificity. The fix increases heading-rule specificity and recognizes explicit ARIA headings, including spans, as block headings. A synthetic Chrome page reproduces the later-loaded source reset and verifies 15.3px bottom margins for p, span[role=heading], and h5 at default preferences, with no horizontal overflow. Sixteen functional regression cases and publication checks passed locally. Applying the new package to the live site requires reloading the extension.

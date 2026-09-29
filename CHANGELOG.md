@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.2 — 2026-09-29
+
+- Recognize explicit ARIA headings, including inline spans, alongside native HTML headings.
+- Override source paragraph-heading margin resets and give inline headings block spacing.
+- Preserve source ARIA attributes on disable and avoid nested duplicate navigation entries.
+
 ## 0.2.1 — 2026-09-29
 
 - Make heading line height and surrounding margins follow the selected line spacing.

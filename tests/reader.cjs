@@ -119,6 +119,15 @@ if (require.main === module) (async()=>{
   await t.update({enabled:false});assert.equal(triggers[0].getAttribute('role'),null);assert.equal(triggers[0].getAttribute('tabindex'),null);assert.equal(snapshot(t.d),t.before);
   triggers[0].click();assert.equal(nativeCalls,1);t.dom.window.close();
  });
+ await test('ARIA span headings have stable ranks and navigation without nested duplicates; disable restores source semantics',async()=>{
+  const body=article({sections:[['1','Definition','<span role="heading" aria-level="3">Visual heading</span><p>Original text.</p><span role="heading" aria-level="4">Nested level</span><h5><span role="heading" aria-level="5">One heading only</span></h5>']]});
+  const t=await create('/chaptercontent/72/19',body);
+  const span=[...t.d.querySelectorAll('span[role="heading"]')][0];
+  assert.equal(span.dataset.wrLevel,'3');assert.equal(t.d.querySelectorAll('.wr-subnav button').length,3);
+  t.d.querySelector('.wr-subnav button').click();assert.equal(t.w.__jump,span);
+  await t.update({font:20});assert.equal(span.dataset.wrLevel,'3');assert.equal(t.d.querySelectorAll('.wr-subnav button').length,3);assert.equal(snapshot(t.d),t.before);
+  await t.update({enabled:false});assert.equal(span.getAttribute('role'),'heading');assert.equal(span.getAttribute('aria-level'),'3');assert(!span.hasAttribute('data-wr-level'));assert.equal(snapshot(t.d),t.before);t.dom.window.close();
+ });
  fs.writeFileSync(path.join(root,'test-results.json'),JSON.stringify(report,null,2));
 })().catch(e=>{console.error(e);process.exitCode=1;});
 module.exports={article,chapters,tnm};

@@ -1,6 +1,6 @@
 {
   "name": "blue-books-reader",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "private": true,
   "description": "Unofficial local reading-layout extension for WHO Blue Books",
   "license": "MIT",
