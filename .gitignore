@@ -1,0 +1,9 @@
+node_modules/
+dist/
+test-results.json
+*.pem
+*.key
+.env
+.env.*
+.DS_Store
+Thumbs.db

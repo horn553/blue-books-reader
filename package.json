@@ -1,0 +1,15 @@
+{
+  "name": "blue-books-reader",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Unofficial local reading-layout extension for WHO Blue Books",
+  "license": "MIT",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node tests/reader.cjs && node tests/publication.cjs",
+    "assets": "node scripts/assets.cjs",
+    "build": "node scripts/build.cjs",
+    "demo": "node scripts/demo.cjs"
+  },
+  "devDependencies": { "jsdom": "26.1.0", "fflate": "0.8.2", "sharp": "0.34.5" }
+}

@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Blue Books Reader</title><link rel="stylesheet" href="popup.css"></head>
+<body><h1>Blue Books Reader</h1><small>Unofficial</small><p>Improve the layout. Keep the original content.</p>
+<label class="switch"><input id="enabled" type="checkbox"> Enable reading layout</label>
+<label for="font">Text size <output id="fontValue"></output></label><input id="font" type="range" min="10" max="24" step="1">
+<label for="width">Maximum text width <output id="widthValue"></output></label><input id="width" type="range" min="64" max="90" step="2">
+<label for="leading">Line spacing <output id="leadingValue"></output></label><input id="leading" type="range" min="1.5" max="1.9" step="0.1">
+<button id="reset" type="button">Restore defaults</button><p id="status" role="status"></p>
+<footer>Requires existing access to WHO Blue Books. Not affiliated with WHO or IARC. Page content is processed locally. Preferences stay in Chrome; page paths and scroll positions stay in this site's tab session to restore your reading position. No analytics or external data transmission.<p><a href="https://github.com/horn553/blue-books-reader/blob/main/PRIVACY.md" target="_blank" rel="noopener noreferrer">Privacy</a> · <a href="https://github.com/horn553/blue-books-reader/issues" target="_blank" rel="noopener noreferrer">Support</a></p></footer>
+<script src="popup.js"></script></body></html>

@@ -1,0 +1,7 @@
+body { width: 300px; padding: 18px; margin: 0; font: 14px/1.6 system-ui,sans-serif; color: #243342; background: #f7f9fa; }
+h1 { font-size: 21px; margin: 0; } small { font-size: 12px; color: #536875; } p { margin: 8px 0 16px; }
+label { display: block; margin-top: 16px; font-weight: 600; } .switch { background: #e4eef5; border-radius: 6px; padding: 10px; }
+input[type=range] { width: 100%; margin: 10px 0; accent-color: #205b85; } output { float: right; font-variant-numeric: tabular-nums; }
+button { border: 1px solid #a8bccb; border-radius: 5px; background: white; padding: 8px 12px; cursor: pointer; }
+footer { border-top: 1px solid #dce4e8; padding-top: 12px; color: #536875; font-size: 12px; } #status { min-height: 22px; font-size: 12px; }
+:focus-visible { outline: 3px solid #2672a2; outline-offset: 3px; }
