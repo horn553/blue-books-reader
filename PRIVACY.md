@@ -1,6 +1,8 @@
 # Privacy Policy
 
-**Blue Books Reader (Unofficial)** · Version 0.2.0 · Updated September 29, 2026
+**Blue Books Reader (Unofficial)** · Applies to versions 0.2.0–0.2.2 · Data-handling policy updated September 29, 2026
+
+Applicability clarified October 1, 2026; data handling is unchanged in 0.2.1 and 0.2.2.
 
 This policy describes the extension maintained at [horn553/blue-books-reader](https://github.com/horn553/blue-books-reader), independently of WHO and IARC.
 

@@ -16,6 +16,10 @@ A Chrome extension that makes WHO Blue Books easier to read while preserving the
 
 The extension changes presentation and navigation, not medical content. It does not summarize, correct, translate, or supplement the source.
 
+## Install from Chrome Web Store
+
+[Install Blue Books Reader (Unofficial)](https://chromewebstore.google.com/detail/blue-books-reader-unoffic/nbabegocogdkpcmaeakjkpnihhfggmij). Version **0.2.2** was published on **September 30, 2026**.
+
 ## Install locally
 
 1. Download this repository or clone it.
@@ -24,7 +28,7 @@ The extension changes presentation and navigation, not medical content. It does 
 4. Reload an already-open WHO Blue Books page.
 5. Open the extension popup to adjust your preferences.
 
-After updating files, click **Reload** in Chrome's extension manager, then reload the site. No build is needed for local installation. A Web Store listing has not yet been published.
+After updating files, click **Reload** in Chrome's extension manager, then reload the site. No build is needed for local installation.
 
 ## Privacy and permissions
 
