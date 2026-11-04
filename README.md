@@ -52,7 +52,7 @@ npm test
 npm run build
 ```
 
-The build creates `dist/blue-books-reader-0.2.3.zip` and its SHA-256 checksum. An explicit allowlist puts the manifest at the ZIP root and excludes tests, dependencies, store assets, and inspection material. Dependencies are development-only; the extension has no third-party runtime code.
+The build creates `dist/blue-books-reader-0.2.4.zip` and its SHA-256 checksum. An explicit allowlist puts the manifest at the ZIP root and excludes tests, dependencies, store assets, and inspection material. Dependencies are development-only; the extension has no third-party runtime code.
 
 `npm run demo` serves original synthetic examples on localhost. They are not WHO/IARC content. The server substitutes localhost only in a served development copy; the package retains its production-origin restriction. `npm run assets` recreates the original icons and promotional artwork.
 
@@ -69,3 +69,7 @@ Report problems in [GitHub Issues](https://github.com/horn553/blue-books-reader/
 ## License
 
 Extension code and original project artwork are under the [MIT License](LICENSE). WHO/IARC names and site content are not licensed by this repository. No book content or publisher logos are bundled.
+
+### Typefaces
+
+Choose Noto Sans (default) or Noto Serif in the popup. Bundled Fontsource Variable 5.3.0 assets cover Latin and Greek, including extended characters, normal/italic styles and variable weights. Other scripts use system fallback. Fonts load locally; licenses are included in `fonts/`.
