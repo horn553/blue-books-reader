@@ -13,7 +13,7 @@ html[data-wr-enabled] .wr-grid::before, html[data-wr-enabled] .wr-grid::after { 
 html[data-wr-enabled] .wr-main { background: white; border: 1px solid var(--wr-rule); border-radius: 10px; }
 html[data-wr-enabled] .wr-article { display: block !important; overflow: visible !important; max-height: none !important; height: auto !important; margin: 0 auto !important; padding: 28px !important; max-width: calc(var(--wr-width) + 56px); color: var(--wr-ink); font: var(--wr-font)/var(--wr-leading) Arial, sans-serif; }
 html[data-wr-enabled] .wr-article .description { font-size: inherit !important; line-height: inherit !important; }
-html[data-wr-enabled] .wr-article p { font-size: inherit !important; line-height: inherit !important; margin: 0 0 .85em !important; text-align: start !important; overflow-wrap: break-word; hyphens: none !important; }
+html[data-wr-enabled] .wr-article p { font-size: inherit !important; line-height: inherit !important; margin: 0 0 .85em !important; text-align: justify !important; text-align-last: start !important; overflow-wrap: break-word; hyphens: none !important; }
 html[data-wr-enabled] .wr-article > div.description { margin: 0 0 1.8em !important; }
 html[data-wr-enabled] .wr-article > div.description > span.description { display: block; }
 /* Use one body-text line as the spacing unit so heading gaps follow the user's leading. */
@@ -62,9 +62,9 @@ html[data-wr-enabled] .wr-layout-table > tbody > tr > td { width: auto !importan
 html[data-wr-enabled] .wr-data-table { display: block; width: 100% !important; max-width: 100%; overflow-x: auto; border-collapse: collapse; margin: 1em 0 !important; font-size: .92em; line-height: 1.5; }
 html[data-wr-enabled] .wr-data-table > :is(thead,tbody,tfoot) > tr > :is(td,th) { padding: 10px 12px !important; border: 1px solid var(--wr-rule) !important; vertical-align: top !important; min-width: 6em; }
 html[data-wr-enabled] .wr-data-table > tbody > tr:nth-child(even) { background: #f4f7f9; }
-html[data-wr-enabled] .wr-data-table p { margin-bottom: .4em !important; }
+html[data-wr-enabled] .wr-data-table p { text-align: start !important; margin-bottom: .4em !important; }
 html[data-wr-enabled] .wr-abbreviations { display: grid !important; grid-template-columns: minmax(100px, .32fr) minmax(0, 1fr); gap: 0 20px; }
-html[data-wr-enabled] .wr-abbreviations > p { margin: 0 !important; border-bottom: 1px solid var(--wr-rule); padding: 10px 0; }
+html[data-wr-enabled] .wr-abbreviations > p { text-align: start !important; margin: 0 !important; border-bottom: 1px solid var(--wr-rule); padding: 10px 0; }
 html[data-wr-enabled] .wr-abbreviations > p:nth-child(odd) { font-weight: 700; }
 html[data-wr-enabled] .wr-chapters { display: block; max-width: 1180px; margin: 24px auto; font-size: 16px; line-height: 1.6; }
 html[data-wr-enabled] .wr-chapters .panel.card { border: 1px solid var(--wr-rule) !important; border-radius: 8px; margin-bottom: 14px; overflow: hidden; }
