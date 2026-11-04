@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.3 — 2026-11-04
+
+- Justify article paragraphs while keeping the final line start-aligned.
+- Keep headings, data-table paragraphs, and abbreviation pairs start-aligned.
+- Preserve source content and existing permissions.
+
 ## 0.2.2 — 2026-09-29
 
 - Recognize explicit ARIA headings, including inline spans, alongside native HTML headings.
