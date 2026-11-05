@@ -1,8 +1,9 @@
 'use strict';
-const defaults = { enabled: true, font: 18, width: 76, leading: 1.7 };
+const defaults = { enabled: true, font: 18, width: 76, leading: 1.7, family: 'sans' };
 const el = id => document.getElementById(id);
 function render(s) {
   el('enabled').checked = s.enabled !== false;
+  el('family').value = s.family === 'serif' ? 'serif' : 'sans';
   ['font','width','leading'].forEach(k => { el(k).value = s[k]; }); labels();
 }
 function labels() {
@@ -13,10 +14,10 @@ function labels() {
 async function save() {
   labels();
   try {
-    await chrome.storage.local.set({ readerPrefs: { enabled: el('enabled').checked, font: +el('font').value, width: +el('width').value, leading: +el('leading').value } });
+    await chrome.storage.local.set({ readerPrefs: { enabled: el('enabled').checked, font: +el('font').value, width: +el('width').value, leading: +el('leading').value, family: el('family').value } });
     el('status').textContent = 'Saved. Applied to supported pages.';
   } catch { el('status').textContent = 'Could not save settings. Please reopen this popup.'; }
 }
 chrome.storage.local.get('readerPrefs', data => render({ ...defaults, ...data.readerPrefs }));
-document.querySelectorAll('input').forEach(input => { input.addEventListener('input', labels); input.addEventListener('change', save); });
+document.querySelectorAll('input, select').forEach(input => { input.addEventListener('input', labels); input.addEventListener('change', save); });
 el('reset').addEventListener('click', () => { render(defaults); save(); });

@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Blue Books Reader (Unofficial)** · Applies to versions 0.2.0–0.2.2 · Data-handling policy updated September 29, 2026
+**Blue Books Reader (Unofficial)** · Applies to versions 0.2.0–0.2.4 · Data-handling policy updated September 29, 2026
 
 Applicability clarified October 1, 2026; data handling is unchanged in 0.2.1 and 0.2.2.
 
@@ -12,7 +12,7 @@ The extension reads the displayed page's document structure, headings, text labe
 
 | Data | Purpose | Location and retention |
 | --- | --- | --- |
-| Enabled state, text size, width, line spacing | Apply reading preferences | `chrome.storage.local`, until changed or the extension is removed |
+| Enabled state, text size, width, line spacing, typeface | Apply reading preferences | `chrome.storage.local`, until changed or the extension is removed |
 | Supported page path, vertical scroll position, timestamp | Restore the reading position when returning in the same tab | The website's tab-scoped `sessionStorage`; records older than four hours are ignored, not automatically deleted |
 | Heading labels and navigation state | Display an outline and operate chapter controls | The current page's memory/DOM; removed on disable or page unload |
 
@@ -23,6 +23,8 @@ The extension observes local clicks, keyboard activation, and scrolling to opera
 ## Sharing and network activity
 
 The extension does not transmit this data to the developer or any third party. It does not sell data, use it for advertising, or use it for creditworthiness or lending decisions. There is no analytics, telemetry, crash-reporting service, or remote executable code.
+
+Bundled Noto fonts are loaded from the extension package, without contacting a font CDN. Only packaged font files are web-accessible to the supported WHO Blue Books origin.
 
 The original website continues to make its normal requests. Its policies govern those requests and any account, note, feedback, or favourite actions you perform. Opening a Privacy or Support link visits GitHub under GitHub's policies. Information you voluntarily post in a public GitHub issue is public; do not post sensitive information or copyrighted book content.
 

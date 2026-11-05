@@ -6,9 +6,10 @@ const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 (async()=>{
  const m=JSON.parse(read('manifest.json')),pkg=JSON.parse(read('package.json'));
  assert.equal(m.version,pkg.version);assert(read('reader.js').includes("'"+m.version+"'"));
+ assert.deepEqual(m.web_accessible_resources,[{resources:['fonts/*.woff2'],matches:['https://tumourclassification.iarc.who.int/*']}]);
  assert(m.description.length<=132);assert.equal(m.manifest_version,3);assert.deepEqual(m.permissions,['storage']);
  assert.deepEqual(m.content_scripts[0].matches,['https://tumourclassification.iarc.who.int/*']);
- assert(!m.background&&!m.host_permissions&&!m.web_accessible_resources);
+ assert(!m.background&&!m.host_permissions);
  for(const [size,p] of Object.entries(m.icons)){
   const b=fs.readFileSync(path.join(root,p));assert.equal(b.readUInt32BE(16),+size);assert.equal(b.readUInt32BE(20),+size);
  }
@@ -22,8 +23,10 @@ const read=p=>fs.readFileSync(path.join(root,p),'utf8');
  w.eval(read('popup.js'));
  assert.equal(w.document.documentElement.lang,'en');assert.equal(w.document.querySelector('#fontValue').textContent,'20px');
  assert.equal(w.document.querySelector('#widthValue').textContent,'800px');
+ assert.equal(w.document.querySelector('#family').value,'sans');
+ w.document.querySelector('#family').value='serif';w.document.querySelector('#family').dispatchEvent(new w.Event('change'));await new Promise(r=>setTimeout(r,0));assert.equal(saved.readerPrefs.family,'serif');
  w.document.querySelector('#reset').click();await new Promise(r=>setTimeout(r,0));
- assert.deepEqual(JSON.parse(JSON.stringify(saved.readerPrefs)),{enabled:true,font:18,width:76,leading:1.7});
+ assert.deepEqual(JSON.parse(JSON.stringify(saved.readerPrefs)),{enabled:true,font:18,width:76,leading:1.7,family:'sans'});
  assert.match(w.document.querySelector('#status').textContent,/Saved/);
  fail=true;w.document.querySelector('#enabled').click();await new Promise(r=>setTimeout(r,0));
  assert.match(w.document.querySelector('#status').textContent,/Could not save/);dom.window.close();
@@ -31,7 +34,7 @@ const read=p=>fs.readFileSync(path.join(root,p),'utf8');
  const zipPath=path.join(root,'dist/blue-books-reader-'+m.version+'.zip');
  const first=fs.readFileSync(zipPath);
  const entries=unzipSync(first);
- const expected=['manifest.json','reader.js','reader.css','popup.html','popup.css','popup.js','LICENSE',...Object.values(m.icons)].sort();
+ const expected=['manifest.json','reader.js','reader.css','fonts.css',...fs.readdirSync(path.join(root,'fonts')).map(n=>'fonts/'+n),'popup.html','popup.css','popup.js','LICENSE',...Object.values(m.icons)].sort();
  assert.deepEqual(Object.keys(entries).sort(),expected);
  assert.equal(JSON.parse(Buffer.from(entries['manifest.json']).toString()).version,m.version);
  execFileSync(process.execPath,[path.join(root,'scripts/build.cjs')],{stdio:'pipe'});

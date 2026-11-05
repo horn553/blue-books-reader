@@ -128,6 +128,16 @@ if (require.main === module) (async()=>{
   await t.update({font:20});assert.equal(span.dataset.wrLevel,'3');assert.equal(t.d.querySelectorAll('.wr-subnav button').length,3);assert.equal(snapshot(t.d),t.before);
   await t.update({enabled:false});assert.equal(span.getAttribute('role'),'heading');assert.equal(span.getAttribute('aria-level'),'3');assert(!span.hasAttribute('data-wr-level'));assert.equal(snapshot(t.d),t.before);t.dom.window.close();
  });
+ await test('Typeface settings migrate, switch live, reject invalid values, and restore on disable',async()=>{
+  const t=await create('/chaptercontent/72/19',article());
+  const family=()=>t.d.documentElement.style.getPropertyValue('--wr-family');
+  assert.match(family(),/BBR Noto Sans/);
+  await t.update({family:'serif',font:20,width:80});assert.match(family(),/BBR Noto Serif/);
+  assert.equal(t.d.documentElement.style.getPropertyValue('--wr-font'),'20px');
+  await t.update({family:'invalid'});assert.match(family(),/BBR Noto Sans/);
+  assert.equal(snapshot(t.d),t.before);
+  await t.update({enabled:false});assert.equal(family(),'');t.dom.window.close();
+ });
  fs.writeFileSync(path.join(root,'test-results.json'),JSON.stringify(report,null,2));
 })().catch(e=>{console.error(e);process.exitCode=1;});
 module.exports={article,chapters,tnm};

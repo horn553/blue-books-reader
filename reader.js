@@ -3,7 +3,7 @@
   'use strict';
   const ORIGIN = 'https://tumourclassification.iarc.who.int';
   if (location.origin !== ORIGIN) return;
-  const DEFAULTS = { enabled: true, font: 18, width: 76, leading: 1.7 };
+  const DEFAULTS = { enabled: true, font: 18, width: 76, leading: 1.7, family: 'sans' };
   let prefs = { ...DEFAULTS }, timer, observer, currentPath = '', frame = 0;
   let entries = [], lastActive;
   const marked = new Map(), attributes = new Map(), inlineStyles = new Map(), generated = new Set();
@@ -47,7 +47,7 @@
     marked.forEach((names, e) => names.forEach(n => e.classList.remove(n))); marked.clear();
     document.documentElement.removeAttribute('data-wr-enabled');
     document.documentElement.removeAttribute('data-wr-version');
-    ['--wr-font', '--wr-width', '--wr-leading'].forEach(n => document.documentElement.style.removeProperty(n));
+    ['--wr-font', '--wr-width', '--wr-leading', '--wr-family'].forEach(n => document.documentElement.style.removeProperty(n));
     entries = []; lastActive = null; accordionStates = new WeakMap();
   }
   function prune() {
@@ -57,11 +57,12 @@
   function stylePreferences() {
     const root = document.documentElement;
     root.setAttribute('data-wr-enabled', '');
-    root.setAttribute('data-wr-version', '0.2.3');
+    root.setAttribute('data-wr-version', '0.2.4');
     root.style.setProperty('--wr-font', `${prefs.font}px`);
     // Retain existing stored slider values, but use a font-independent CSS-pixel width.
     root.style.setProperty('--wr-width', `${prefs.width * 10}px`);
     root.style.setProperty('--wr-leading', prefs.leading);
+    root.style.setProperty('--wr-family', prefs.family === 'serif' ? '"BBR Noto Serif", Georgia, serif' : '"BBR Noto Sans", Arial, sans-serif');
   }
   function semanticHeading(e, level) {
     if (!e || !cleanText(e)) return;
@@ -336,7 +337,7 @@
   const number = (v, fallback, min, max) => Number.isFinite(Number(v)) ? Math.min(max, Math.max(min, Number(v))) : fallback;
   function setPrefs(value) {
     const s = value || {};
-    prefs = { enabled: s.enabled !== false, font: number(s.font,18,10,24), width: number(s.width,76,64,90), leading: number(s.leading,1.7,1.5,1.9) };
+    prefs = { enabled: s.enabled !== false, font: number(s.font,18,10,24), width: number(s.width,76,64,90), leading: number(s.leading,1.7,1.5,1.9), family: s.family === 'serif' ? 'serif' : 'sans' };
     schedule();
   }
   observer = new MutationObserver(schedule);

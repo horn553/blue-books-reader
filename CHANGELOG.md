@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.4 — 2026-11-05
+
+- Bundle Noto Sans and Noto Serif with normal, italic, and variable weights.
+- Add a saved typeface selector; existing settings default to Noto Sans.
+- Include Latin, extended Latin, Greek, and extended Greek; other scripts use system fallback.
+- Load fonts locally with no external font requests.
+
 ## 0.2.3 — 2026-11-04
 
 - Justify article paragraphs while keeping the final line start-aligned.
