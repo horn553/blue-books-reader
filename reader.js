@@ -30,6 +30,11 @@
     if (!inlineStyles.has(e)) inlineStyles.set(e, new Map());
     const map = inlineStyles.get(e);
     if (!map.has(name)) map.set(name, { value: e.style.getPropertyValue(name), priority: e.style.getPropertyPriority(name), last: value });
+    else if (e.style.getPropertyValue(name) !== map.get(name).last || e.style.getPropertyPriority(name) !== 'important') {
+      // The site replaced a declaration after enhancement; restore its latest value.
+      map.get(name).value = e.style.getPropertyValue(name);
+      map.get(name).priority = e.style.getPropertyPriority(name);
+    }
     e.style.setProperty(name, value, 'important'); map.get(name).last = value;
   }
   function reset() {
@@ -57,7 +62,7 @@
   function stylePreferences() {
     const root = document.documentElement;
     root.setAttribute('data-wr-enabled', '');
-    root.setAttribute('data-wr-version', '0.2.4');
+    root.setAttribute('data-wr-version', '0.2.5');
     root.style.setProperty('--wr-font', `${prefs.font}px`);
     // Retain existing stored slider values, but use a font-independent CSS-pixel width.
     root.style.setProperty('--wr-width', `${prefs.width * 10}px`);
@@ -91,6 +96,18 @@
       ['wr-layout-table', 'wr-data-table'].forEach(c => { if (c !== kind) table.classList.remove(c); });
       mark(table, kind);
       if (kind === 'wr-data-table') patch(table, 'tabindex', '0');
+    });
+  }
+  function enhanceTypography(root) {
+    // Imported Word/HTML text can carry its own font declarations. Keep semantic
+    // emphasis and scripts, but make body typography inherit the reader settings.
+    root.querySelectorAll('p,span,div,li,ul,ol,thead,tbody,tfoot,tr,td,th,a,strong,b,em,i,u,s,font,caption,h1,h2,h3,h4,h5,h6').forEach(e => {
+      if (e.closest('[data-wr-generated],.fa,.glyphicon,.material-icons,[aria-hidden="true"]')) return;
+      mark(e, 'wr-text');
+      for (const prop of ['font-family', 'font-size', 'line-height']) {
+        if (prop === 'font-size' && e.matches(headingSelector)) continue;
+        if (e.style.getPropertyPriority(prop) === 'important') inline(e, prop, 'inherit');
+      }
     });
   }
   function enhanceAbbreviations(article) {
@@ -175,7 +192,7 @@
     mark(grid.parentElement, 'wr-page'); mark(grid.children[0], 'wr-sidebar'); mark(grid.children[2], 'wr-media');
     mark(nav, 'wr-nav');
     article.querySelectorAll('.content-heading').forEach(e => semanticHeading(e.closest('h4'), 1));
-    buildNavigation(article, nav); enhanceTables(article); enhanceAbbreviations(article);
+    buildNavigation(article, nav); enhanceTables(article); enhanceTypography(article); enhanceAbbreviations(article);
     const gallery = grid.querySelector('#myAttachments');
     if (gallery) {
       mark(gallery, 'wr-gallery');
@@ -228,11 +245,15 @@
   function enhanceAttachments() {
     if (/^\/attachment\//.test(location.pathname)) {
       const app = [...document.querySelectorAll('#bookapproot *')].find(e => e.tagName.startsWith('APP-') && e.querySelector('table'));
-      if (app) { mark(app, 'wr-attachment-page'); enhanceTables(app); }
+      if (app) { mark(app, 'wr-attachment-page'); enhanceTables(app); enhanceTypography(app); }
     }
     // Group existing ID and caption visually, keeping their order and original actions.
     document.querySelectorAll('.modal').forEach(modal => {
-      if (modal.querySelector('a[href^="/attachment/"]')) mark(modal, 'wr-table-modal');
+      if (modal.querySelector('a[href^="/attachment/"],table')) {
+        mark(modal, 'wr-table-modal'); enhanceTables(modal);
+        const body = modal.querySelector('.modal-body');
+        if (body) enhanceTypography(body);
+      }
     });
   }
   function updateCurrent() {
@@ -275,7 +296,7 @@
       if (!active()) { reset(); return; }
       prune(); stylePreferences(); enhanceArticle(); enhanceChapters(); syncBookToggles(); enhanceAttachments();
       restorePosition();
-    } finally { observer.observe(document.body, { childList: true, subtree: true, characterData: true }); }
+    } finally { observe(); }
   }
   function schedule() { clearTimeout(timer); timer = setTimeout(apply, 100); }
   function jump(entry) {
@@ -341,7 +362,10 @@
     schedule();
   }
   observer = new MutationObserver(schedule);
-  observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+  function observe() {
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['style', 'class'] });
+  }
+  observe();
   const back = performance.getEntriesByType?.('navigation')[0]?.type === 'back_forward';
   restorePending = !!back;
   if (typeof chrome !== 'undefined' && chrome.storage?.local) {

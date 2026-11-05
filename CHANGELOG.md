@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.5 — 2026-11-05
+
+- Apply selected typography to imported text, table cells, attachment pages, and table modals.
+- Make data-table line spacing follow the reader preference and avoid nested font-size scaling.
+- Reapply enhancements after source style/class changes and delayed table loads.
+- Preserve emphasis, icon fonts, superscripts, cell relationships, and restore overridden styles when disabled.
+
 ## 0.2.4 — 2026-11-05
 
 - Bundle Noto Sans and Noto Serif with normal, italic, and variable weights.
