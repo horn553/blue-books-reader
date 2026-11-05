@@ -138,6 +138,31 @@ if (require.main === module) (async()=>{
   assert.equal(snapshot(t.d),t.before);
   await t.update({enabled:false});assert.equal(family(),'');t.dom.window.close();
  });
+ await test('Imported important typography follows settings and restores without changing emphasis or icons',async()=>{
+  const body=article({sections:[['1','Definition','<p><span id="imported" style="font-family:Times New Roman!important;font-size:9pt!important;line-height:10pt!important;color:red"><strong>Emphasis</strong><em>Italic</em><sup>2</sup></span><i class="fa" style="font-family:FontAwesome!important">icon</i></p>']]});
+  const t=await create('/chaptercontent/72/19',body),text=t.d.querySelector('#imported');
+  for(const p of ['font-family','font-size','line-height']) assert.equal(text.style.getPropertyValue(p),'inherit');
+  assert.equal(t.d.querySelector('.fa').classList.contains('wr-text'),false);
+  assert.equal(t.d.querySelector('sup').classList.contains('wr-text'),false);
+  assert.equal(snapshot(t.d),t.before);
+  await t.update({font:24,leading:1.9,family:'serif'});assert.equal(text.style.fontSize,'inherit');
+  await t.update({enabled:false});assert.equal(text.style.fontSize,'9pt');assert.equal(text.style.lineHeight,'10pt');assert.equal(text.style.color,'red');assert(!t.d.querySelector('.wr-text'));t.dom.window.close();
+ });
+ await test('Attribute-only source typography changes are reprocessed without observer loops',async()=>{
+  const t=await create('/chaptercontent/72/19',article());
+  const p=t.d.querySelector('span.description p');p.style.setProperty('font-size','8pt','important');
+  await sleep(180);assert.equal(p.style.fontSize,'inherit');
+  let mutations=0;const observer=new t.w.MutationObserver(records=>mutations+=records.length);observer.observe(t.d.body,{subtree:true,attributes:true,childList:true});
+  await sleep(250);assert.equal(mutations,0);observer.disconnect();await t.update({enabled:false});assert.equal(p.style.fontSize,'8pt');assert.equal(p.style.getPropertyPriority('font-size'),'important');t.dom.window.close();
+ });
+ await test('Delayed attachment and modal tables get reader typography and reversible table enhancement',async()=>{
+  const t=await create('/attachment/72/101','<app-attachment><div id="late"></div></app-attachment>');
+  t.d.querySelector('#late').innerHTML='<table><tbody><tr><td><span style="font-size:8pt!important">Cell</span></td><td>Other</td></tr></tbody></table>';
+  await sleep(180);assert(t.d.querySelector('.wr-attachment-page .wr-data-table .wr-text'));
+  await t.update({enabled:false});assert(!t.d.querySelector('.wr-text'));assert.equal(t.d.querySelector('span').style.fontSize,'8pt');t.dom.window.close();
+  const m=await create('/chaptercontent/72/19',article()+'<div class="modal"><div class="modal-body"><table><tr><td>Modal cell</td><td>Second cell</td></tr></table></div></div>');
+  assert(m.d.querySelector('.wr-table-modal .wr-data-table td.wr-text'));await m.update({enabled:false});assert(!m.d.querySelector('.wr-table-modal,.wr-data-table,.wr-text'));m.dom.window.close();
+ });
  fs.writeFileSync(path.join(root,'test-results.json'),JSON.stringify(report,null,2));
 })().catch(e=>{console.error(e);process.exitCode=1;});
 module.exports={article,chapters,tnm};

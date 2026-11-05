@@ -52,9 +52,11 @@ npm test
 npm run build
 ```
 
-The build creates `dist/blue-books-reader-0.2.4.zip` and its SHA-256 checksum. An explicit allowlist puts the manifest at the ZIP root and excludes tests, dependencies, store assets, and inspection material. Dependencies are development-only; the extension has no third-party runtime code.
+The build creates `dist/blue-books-reader-0.2.5.zip` and its SHA-256 checksum. An explicit allowlist puts the manifest at the ZIP root and excludes tests, dependencies, store assets, and inspection material. Dependencies are development-only; the extension has no third-party runtime code.
 
 `npm run demo` serves original synthetic examples on localhost. They are not WHO/IARC content. The server substitutes localhost only in a served development copy; the package retains its production-origin restriction. `npm run assets` recreates the original icons and promotional artwork.
+
+`npm run qa:typography` serves browser regression checks at `http://127.0.0.1:8766/chaptercontent/72/19` and `http://127.0.0.1:8766/attachment/72/101`. Open each URL in Chrome: the page checks computed text size, typeface, line spacing, source style updates, disable/restore, emphasis, and cell spans. These fixtures contain synthetic text only. Table viewer styles can also be inspected in the article fixture's hidden modal.
 
 ## Publishing and maintenance
 

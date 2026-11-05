@@ -13,6 +13,10 @@ html[data-wr-enabled] .wr-grid::before, html[data-wr-enabled] .wr-grid::after { 
 html[data-wr-enabled] .wr-main { background: white; border: 1px solid var(--wr-rule); border-radius: 10px; }
 html[data-wr-enabled] .wr-article { display: block !important; overflow: visible !important; max-height: none !important; height: auto !important; margin: 0 auto !important; padding: 28px !important; max-width: calc(var(--wr-width) + 56px); color: var(--wr-ink); font: var(--wr-font)/var(--wr-leading) var(--wr-family, Arial, sans-serif); }
 html[data-wr-enabled] .wr-article .description { font-size: inherit !important; line-height: inherit !important; }
+/* Override imported typography at each text node, including cell wrappers and
+   heading spans. Do not reset weight/style, superscripts, or icon fonts. */
+html[data-wr-enabled] :is(.wr-article,.wr-attachment-page,.wr-table-modal .modal-body) .wr-text { font-family: inherit !important; line-height: inherit !important; }
+html[data-wr-enabled] :is(.wr-article,.wr-attachment-page,.wr-table-modal .modal-body) .wr-text:not(.wr-heading):not(h1,h2,h3,h4,h5,h6) { font-size: inherit !important; }
 html[data-wr-enabled] .wr-article p { font-size: inherit !important; line-height: inherit !important; margin: 0 0 .85em !important; text-align: justify !important; text-align-last: start !important; overflow-wrap: break-word; hyphens: none !important; }
 html[data-wr-enabled] .wr-article > div.description { margin: 0 0 1.8em !important; }
 html[data-wr-enabled] .wr-article > div.description > span.description { display: block; }
@@ -59,7 +63,8 @@ html[data-wr-enabled] app-chaptercontent .breadcrumb { display: flex; flex-wrap:
 html[data-wr-enabled] app-chaptercontent .breadcrumb li { max-width: 100%; overflow-wrap: anywhere; }
 html[data-wr-enabled] .wr-layout-table { table-layout: fixed !important; width: 100% !important; max-width: 100%; border: 0 !important; border-collapse: collapse; margin: 0 0 2em; }
 html[data-wr-enabled] .wr-layout-table > tbody > tr > td { width: auto !important; border: 0 !important; padding: 0 !important; min-width: 0; }
-html[data-wr-enabled] .wr-data-table { display: block; width: 100% !important; max-width: 100%; overflow-x: auto; border-collapse: collapse; margin: 1em 0 !important; font-size: .92em; line-height: 1.5; }
+html[data-wr-enabled] .wr-data-table { display: block; width: 100% !important; max-width: 100%; overflow-x: auto; border-collapse: collapse; margin: 1em 0 !important; font-size: calc(var(--wr-font) * .92) !important; line-height: var(--wr-leading) !important; font-family: var(--wr-family, Arial, sans-serif) !important; }
+html[data-wr-enabled] .wr-layout-table { font-size: var(--wr-font) !important; line-height: var(--wr-leading) !important; font-family: var(--wr-family, Arial, sans-serif) !important; }
 html[data-wr-enabled] .wr-data-table > :is(thead,tbody,tfoot) > tr > :is(td,th) { padding: 10px 12px !important; border: 1px solid var(--wr-rule) !important; vertical-align: top !important; min-width: 6em; }
 html[data-wr-enabled] .wr-data-table > tbody > tr:nth-child(even) { background: #f4f7f9; }
 html[data-wr-enabled] .wr-data-table p { text-align: start !important; margin-bottom: .4em !important; }
@@ -89,9 +94,9 @@ html[data-wr-enabled] .wr-chapters [data-wr-indent="6"] { padding-left: 72px !im
 html[data-wr-enabled] .wr-chapters .wr-category { margin-top: 14px !important; font-weight: 700; border-top: 1px solid var(--wr-rule); }
 html[data-wr-enabled] .wr-chapters a:hover { text-decoration: underline; }
 html[data-wr-enabled] .wr-table-modal .modal-dialog { max-width: min(960px, 94vw); }
-html[data-wr-enabled] .wr-table-modal .modal-body { font-size: 16px; line-height: 1.65; }
+html[data-wr-enabled] .wr-table-modal .modal-body { font: var(--wr-font)/var(--wr-leading) var(--wr-family, Arial, sans-serif) !important; }
 html[data-wr-enabled] .wr-table-modal li { padding: 12px; border-bottom: 1px solid var(--wr-rule); }
-html[data-wr-enabled] .wr-attachment-page { display: block; max-width: 1280px; margin: 24px auto; padding: 20px; font-size: 17px; line-height: 1.6; }
+html[data-wr-enabled] .wr-attachment-page { display: block; max-width: 1280px; margin: 24px auto; padding: 20px; font: var(--wr-font)/var(--wr-leading) var(--wr-family, Arial, sans-serif) !important; }
 @media (max-width: 1350px) {
  html[data-wr-enabled] .wr-grid { grid-template-columns: 220px minmax(0, 1fr); }
  html[data-wr-enabled] .wr-media { grid-column: 2; position: static; }
